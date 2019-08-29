@@ -19,9 +19,6 @@ variable "rds_instance_class" {}
 variable "rds_maintenance_window" {}
 variable "rds_major_engine_version" {}
 variable "rds_port" {}
-variable "vpc_database_subnet_ids" {
-  
-}
 
 //--------------------------------------------------------------------
 // Modules
