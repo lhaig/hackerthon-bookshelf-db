@@ -19,10 +19,23 @@ variable "rds_instance_class" {}
 variable "rds_maintenance_window" {}
 variable "rds_major_engine_version" {}
 variable "rds_port" {}
-variable "vpc_database_subnet_ids" {}
+variable "vpc_database_subnet_ids" {
+  
+}
 
 //--------------------------------------------------------------------
 // Modules
+
+data "terraform_remote_state" "vpc_id" {
+  backend = "remote"
+  config = {
+    hostname     = "app.terraform.io"
+    organization = "emea-se-playground-2019"
+    workspaces = {
+      name = "hackerthon-bookshelf"
+    }
+  }
+}
 
 module "rds" {
   source  = "terraform-aws-modules/rds/aws"
@@ -41,7 +54,7 @@ module "rds" {
   name = var.rds_database_name
   password = var.rds_database_password
   port = var.rds_port
-  subnet_ids = var.vpc_database_subnet_ids
+  subnet_ids = data.terraform_remote_state.vpc_id.database_subnet_ids
   username = var.rds_database_name
   tags  = {
       owner = var.owner
