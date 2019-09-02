@@ -52,8 +52,7 @@ module "rds" {
   password = var.rds_database_password
   port = var.rds_port
   subnet_ids = data.terraform_remote_state.vpc_id.outputs.database_subnet_ids
-  vpc_security_group_ids = [data.terraform_remote_state.vpc_id.outputs.security_group]
-  username = var.rds_database_name
+  username = var.rds_database_user
   tags  = {
       owner = var.owner
       env   = var.environment_tag
